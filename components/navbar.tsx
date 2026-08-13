@@ -7,6 +7,11 @@ import { navLinks, site } from "@/lib/site";
 import { Close, Menu } from "@/components/icons";
 import { ThemeToggle } from "@/components/theme-toggle";
 
+function normalizePath(path: string) {
+  if (path === "/") return "/";
+  return path.replace(/\/+$/, "");
+}
+
 export function Navbar() {
   const rawPathname = usePathname() ?? "";
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -58,7 +63,8 @@ export function Navbar() {
 
           <nav className="absolute left-1/2 flex -translate-x-1/2 items-center space-x-1 text-sm font-medium">
             {navLinks.map((link) => {
-              const active = pathname === link.href;
+              const active =
+                normalizePath(pathname) === normalizePath(link.href);
               return (
                 <Link
                   key={link.href}
@@ -114,7 +120,7 @@ export function Navbar() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent ${
-                  pathname === link.href
+                  normalizePath(pathname) === normalizePath(link.href)
                     ? "text-foreground"
                     : "text-foreground/60"
                 }`}
