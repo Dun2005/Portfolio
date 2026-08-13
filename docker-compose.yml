@@ -1,7 +1,7 @@
 services:
   portfolio:
     build: .
-    image: ghcr.io/Dun2005/portfolio:latest
+    image: ghcr.io/dun2005/portfolio:latest
     restart: unless-stopped
     expose:
       - "3000"
