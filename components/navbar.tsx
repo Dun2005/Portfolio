@@ -8,7 +8,12 @@ import { Close, Menu } from "@/components/icons";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Navbar() {
-  const pathname = usePathname();
+  const rawPathname = usePathname() ?? "";
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const pathname =
+    basePath && rawPathname.startsWith(basePath)
+      ? rawPathname.slice(basePath.length) || "/"
+      : rawPathname;
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
